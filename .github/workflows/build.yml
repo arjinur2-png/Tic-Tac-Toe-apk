@@ -24,19 +24,14 @@ jobs:
           sudo apt-get install -y git zip unzip openjdk-17-jdk autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libffi-dev libssl-dev
           pip install --upgrade buildozer cython
 
+      - name: Accept SDK Licenses
+        run: |
+          mkdir -p ~/.android
+          touch ~/.android/repositories.cfg
+
       - name: Build APK with Buildozer
         run: |
-          buildozer init
-          # Hapus semua baris android.archs yang lama
-          sed -i '/android.archs/d' buildozer.spec
-          
-          # Tambahkan opsi bersih di bagian paling bawah
-          echo "requirements = python3,pygame" >> buildozer.spec
-          echo "android.accept_sdk_license = True" >> buildozer.spec
-          echo "android.archs = armeabi-v7a" >> buildozer.spec
-          
-          # Jalankan build
-          buildozer -v android debug
+          yes | buildozer -v android debug
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
