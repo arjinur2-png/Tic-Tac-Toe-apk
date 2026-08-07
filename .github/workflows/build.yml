@@ -31,8 +31,8 @@ jobs:
           sed -i 's/requirements = .*/requirements = python3,pygame/' buildozer.spec
           sed -i 's/# android.accept_sdk_license = False/android.accept_sdk_license = True/' buildozer.spec
           
-          # Kunci khusus ke arsitektur armeabi-v7a (32-bit)
-          sed -i 's/android.archs = .*/android.archs = armeabi-v7a/' buildozer.spec
+          # Memaksa hanya 1 arsitektur (armeabi-v7a) dengan menambahkan baris baru di akhir file spec
+          echo "android.archs = armeabi-v7a" >> buildozer.spec
           
           # Jalankan build
           buildozer -v android debug
