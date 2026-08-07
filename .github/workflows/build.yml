@@ -28,7 +28,7 @@ jobs:
         run: |
           buildozer init
           sed -i 's/requirements = .*/requirements = python3,pygame/' buildozer.spec
-          buildozer -v android debug
+          yes | buildozer -v android debug
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
