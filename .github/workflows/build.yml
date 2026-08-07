@@ -27,13 +27,14 @@ jobs:
       - name: Build APK with Buildozer
         run: |
           buildozer init
-          # Ubah konfigurasi buildozer.spec secara otomatis
+          # Pengaturan utama
           sed -i 's/requirements = .*/requirements = python3,pygame/' buildozer.spec
           sed -i 's/# android.accept_sdk_license = False/android.accept_sdk_license = True/' buildozer.spec
-          sed -i 's/# android.ndk = .*/android.ndk = 25b/' buildozer.spec
-          sed -i 's/# android.api = .*/android.api = 33/' buildozer.spec
           
-          # Jalankan buildozer tanpa pipe 'yes |' agar tidak broken pipe
+          # Kunci khusus ke arsitektur armeabi-v7a (32-bit)
+          sed -i 's/android.archs = .*/android.archs = armeabi-v7a/' buildozer.spec
+          
+          # Jalankan build
           buildozer -v android debug
 
       - name: Upload APK Artifact
