@@ -27,11 +27,12 @@ jobs:
       - name: Build APK with Buildozer
         run: |
           buildozer init
-          # Pengaturan utama
-          sed -i 's/requirements = .*/requirements = python3,pygame/' buildozer.spec
-          sed -i 's/# android.accept_sdk_license = False/android.accept_sdk_license = True/' buildozer.spec
+          # Hapus semua baris android.archs yang lama
+          sed -i '/android.archs/d' buildozer.spec
           
-          # Memaksa hanya 1 arsitektur (armeabi-v7a) dengan menambahkan baris baru di akhir file spec
+          # Tambahkan opsi bersih di bagian paling bawah
+          echo "requirements = python3,pygame" >> buildozer.spec
+          echo "android.accept_sdk_license = True" >> buildozer.spec
           echo "android.archs = armeabi-v7a" >> buildozer.spec
           
           # Jalankan build
